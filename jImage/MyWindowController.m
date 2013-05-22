@@ -164,17 +164,6 @@ float DegreetoRadian(float degree)
   return ((degree / 180.0f) * M_PI);
 }
 
-- (void)savePanelDidEnd: (NSSavePanel *)sheet
-             returnCode: (int)returnCode
-            contextInfo: (void *)contextInfo
-{
-  if (returnCode == NSOKButton)
-  {
-    NSString * path = [[sheet URL] path];
-    [self saveFileNameAs:[NSURL fileURLWithPath:path]];
-  }
-}
-
 - (void)saveImage:(NSString *)path
 {
   mSaveOptions = [[IKSaveOptions alloc] initWithImageProperties:mImageProperties imageUTType: mImageUTType];
@@ -245,15 +234,16 @@ float DegreetoRadian(float degree)
       mSaveOptions = [[IKSaveOptions alloc]
                       initWithImageProperties: mImageProperties
                       imageUTType: mImageUTType];
-      [mSaveOptions addSaveOptionsAccessoryViewToSavePanel: savePanel];
-      
-      NSString * fileName = [[[self imageURL] path] lastPathComponent];
-      [savePanel beginSheetForDirectory: NULL
-                                   file: fileName
-                         modalForWindow: [self window]
-                          modalDelegate: self
-                         didEndSelector: @selector(savePanelDidEnd:returnCode:contextInfo:)
-                            contextInfo: NULL];
+      [mSaveOptions addSaveOptionsAccessoryViewToSavePanel: savePanel];      
+      //NSString * fileName = [[[self imageURL] path] lastPathComponent];
+      [savePanel beginSheetModalForWindow: [self window] completionHandler: ^(NSInteger result)
+      {
+        if (result == NSOKButton)
+        {
+          NSString * path = [[savePanel URL] path];
+          [self saveFileNameAs:[NSURL fileURLWithPath:path]];
+        }
+      }];
       break;
     }
   }
@@ -424,6 +414,11 @@ float DegreetoRadian(float degree)
   [printView setImageScaling:NSScaleProportionally];
   [printView setImage:image];
   [printView print:sender];
+}
+
+- (IBAction)segEXIFClicked:(id)sender
+{
+  NSLog(@"Click !");
 }
 
 @end

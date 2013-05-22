@@ -22,6 +22,7 @@
   int iDirPos;
 }
 @property (weak) IBOutlet DMSplitView *splitView;
+- (IBAction)segEXIFClicked:(id)sender;
 @property (weak) IBOutlet NSSegmentedControl *segFileOp;
 - (IBAction)segFileOpClicked:(id)sender;
 @property (weak) IBOutlet NSSegmentedControl *segZoom;
