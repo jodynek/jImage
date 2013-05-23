@@ -10,6 +10,7 @@
 #import <Quartz/Quartz.h>
 #import <AppKit/AppKit.h>
 #import "DMSplitView.h"
+#import "CProperties.h"
 
 #define ZOOM_IN_FACTOR  1.414214 // doubles the area
 #define ZOOM_OUT_FACTOR 0.7071068 // halves the area
@@ -28,8 +29,8 @@
       mListOfImages = [[NSMutableArray alloc] init];
     iDirPos = 0;
     
-    [_imgMain setDelegate:self];
     [_imgMain zoomImageToFit: self];
+    //[_imgMain setDelegate:self];
     // !!!!!!!!! crashing
     //[[[NSDocumentController sharedDocumentController] currentDocument] setDraggingDestinationDelegate:self];
  }
@@ -46,11 +47,25 @@
 {
   [super windowDidLoad];
 
-  [_splitView setMinSize:200 ofSubviewAtIndex:1];
+  // datasource
+  arrEXIF = [[NSMutableArray alloc] init];
+  arrIPTC = [[NSMutableArray alloc] init];
+  [_outlineView setDelegate:self];
+  [_outlineView setDataSource:self];
+  
+  // split view
+  [_splitView setMinSize:200 ofSubviewAtIndex:0];
+  [_splitView setMinSize:100 ofSubviewAtIndex:1];
+  [_splitView setPriority:1 ofSubviewAtIndex:0];
+  [_splitView setPriority:0 ofSubviewAtIndex:1];
   [_splitView setCanCollapse:YES subviewAtIndex:1];
-  [_splitView collapseOrExpandSubviewAtIndex:1
-                                    animated:NO];
-
+  [_splitView collapseOrExpandSubviewAtIndex:1 animated:NO];
+  NSView* subview = _splitView.subviews[1];
+  int iWidth = [subview frame].size.width;
+  (iWidth == 0) ? [_segEXIF setSelected:FALSE forSegment:0] : [_segEXIF setSelected:TRUE forSegment:0];
+  if (iWidth != 0)
+    [self loadEXIFData:_imageURL];
+ 
   // customize the IKImageView...
   [_imgMain setDoubleClickOpensImageEditPanel: YES];
   [_imgMain setCurrentToolMode: IKToolModeMove];
@@ -71,9 +86,176 @@
   [_segTools setWidth:50 forSegment:3];
 }
 
+- (void)loadEXIFData:(NSURL *)url
+{
+  [self exif:url];
+  [_outlineView reloadData];
+  // expand all items
+  [_outlineView expandItem:nil expandChildren:YES];
+}
+
+- (void)fillCustomArray:(NSArray *)inputArray
+            outputArray:(NSMutableArray *)outputArray
+               rootItem:(NSString *)rootItem
+{
+  [outputArray removeAllObjects];
+  // for root items
+  CProperties *propRoot = [[CProperties alloc] init];
+  [propRoot setIsRoot:TRUE];
+  [propRoot setSKey:rootItem];
+  [outputArray addObject: propRoot];
+  // child items
+  for(NSString *key in inputArray)
+  {
+    CProperties *prop = [[CProperties alloc] init];
+    NSString *value = [inputArray valueForKey:key];
+    if (value != nil)
+    {
+      if ([value isKindOfClass:[NSArray class]])
+      {
+        NSArray *subArray = [[NSArray alloc] initWithArray:(NSArray *)value];
+        [prop setValues:subArray];
+        [prop setSKey:key];
+      } else {
+        [prop setSKey:key];
+        [prop setSValue:value];
+        //NSLog(@"obj: %@, %@", key, value);
+      }
+    }
+    [outputArray addObject:prop];
+  }
+}
+
+- (void) exif:(NSURL *) url
+{
+  CGImageSourceRef source = CGImageSourceCreateWithURL( (__bridge CFURLRef) url,NULL);
+  if (!source)
+  {
+    int response;
+    NSAlert *alert = [NSAlert alertWithMessageText:@"Could not create image source !" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
+    [alert beginSheetModalForWindow:[self window]
+                      modalDelegate:self
+                     didEndSelector:nil
+                        contextInfo:&response];
+    NSLog(@"***Could not create image source ***");
+    return;
+  }
+  //get all the metadata in the image
+  NSDictionary *metadata = (__bridge NSDictionary *) CGImageSourceCopyPropertiesAtIndex(source,0,NULL);
+  
+  //get all the metadata EXIF in the image
+  NSArray *exif = [metadata valueForKey:@"{Exif}"];
+  //NSLog(@"AnnotationProfil: Exif -> %@", exif);
+  [self fillCustomArray:exif outputArray:arrEXIF rootItem:@"EXIF"];
+  
+  //get all the metadata IPTC in the image
+  NSArray *iptc = [metadata valueForKey:@"{IPTC}"];
+  NSLog(@"AnnotationProfil: IPTC -> %@",iptc);
+  [self fillCustomArray:iptc outputArray:arrIPTC rootItem:@"IPTC"];
+}
+
+//
+// NSOutlineView
+//
+- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
+{
+  CProperties *prop = item;
+  if (prop == nil)
+  {
+    //item is nil when the outline view wants to inquire for root level items
+    // we have 2 root items - EXIF & IPTC
+    return 2;
+  } else {
+    if ([prop values] != nil)
+      return [[prop values] count];
+    else
+    {
+      if ([[prop sKey] isEqualToString:@"EXIF"])
+        return [arrEXIF count] - 1;
+      else
+        return [arrIPTC count] - 1;
+    }
+  }
+  return 0;
+}
+
+- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
+{
+  if ([item isKindOfClass:[CProperties class]])
+  {
+    CProperties *prop = item;
+    if ([prop values] != nil || [prop isRoot])
+    {
+      return YES;
+    } else {
+      return NO;
+    }
+  } else
+    return NO;
+}
+
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
+{
+  CProperties *prop = item;
+  if ([[prop sKey] isEqualToString:@"EXIF"])
+  {
+    if ([arrEXIF count] == 0)
+      return nil;
+  } else {
+    if ([arrIPTC count] == 0)
+      return nil;
+  }
+  if (prop == nil)
+  { //item is nil when the outline view wants to inquire for root level items
+    if (index == 0)
+      return [arrEXIF objectAtIndex:0];
+    else if (index == 1)
+      return [arrIPTC objectAtIndex:0];
+  } else {
+    if ([prop values] != nil)
+    {
+      return [[prop values] objectAtIndex:index];
+    } else {
+      if ([[prop sKey] isEqualToString:@"EXIF"])
+        return [arrEXIF objectAtIndex:index + 1];
+      else
+        return [arrIPTC objectAtIndex:index + 1];
+    }
+  }
+  return nil;
+}
+
+- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn
+           byItem:(id)item
+{
+  if ([item isKindOfClass:[CProperties class]])
+  {
+    CProperties *prop = item;
+    if ([[tableColumn identifier] isEqualToString:@"sKey"])
+    {
+      if ([prop values] != nil && [prop isRoot])
+        return [NSString stringWithFormat:@"%@ (%li values)",[prop sKey], [[item values] count]];
+      if ([prop values] != nil )
+      {
+        // ... then write something informative in the header (number of values)
+        return [NSString stringWithFormat:@"%@ (%li values)",[prop sKey], [[item values] count]];
+      }
+      return [prop sKey]; // ...and, if we actually have a value, return the value
+    } else if ([[tableColumn identifier] isEqualToString:@"sValue"]) {
+      if ([prop values] == nil)
+      {
+        return [prop sValue]; // return value without children
+      }
+    }
+  } else {
+    if ([[tableColumn identifier] isEqualToString:@"sKey"])
+      return item;
+  }
+  return nil;
+}
+
 -(NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
 {
-  //[[self window] setTitle:[_imageURL path]];
   [[self window] setTitle:displayName];
   return displayName;
 }
@@ -86,6 +268,7 @@
 - (void)openImageURL: (NSURL*)url
 {
   [_imgMain setImageWithURL:url];
+  [self displayOrHideEXIF];
 }
 
 // open image document
@@ -416,9 +599,34 @@ float DegreetoRadian(float degree)
   [printView print:sender];
 }
 
+- (void)displayOrHideEXIF
+{
+  NSView* subview = _splitView.subviews[1];
+  int iWidth = [subview frame].size.width;
+  if (iWidth != 0)
+  {
+    [self loadEXIFData:_imageURL];
+  }  
+}
+
 - (IBAction)segEXIFClicked:(id)sender
 {
-  NSLog(@"Click !");
+  NSInteger iChoose;
+  if ([sender isKindOfClass: [NSSegmentedControl class]])
+    iChoose = [sender selectedSegment];
+  else
+    iChoose = [sender tag];
+  
+  switch (iChoose)
+  {
+    case 0:
+    {
+      [_splitView collapseOrExpandSubviewAtIndex:1
+                                        animated:NO];
+      [self displayOrHideEXIF];
+      break;
+    }
+  }
 }
 
 @end

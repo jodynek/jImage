@@ -11,7 +11,7 @@
 @class IKSaveOptions;
 @class DMSplitView;
 
-@interface MyWindowController : NSWindowController
+@interface MyWindowController : NSWindowController<NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
   NSDictionary * mImageProperties;
   NSString *     mImageUTType;
@@ -20,8 +20,13 @@
   MyWindowController *windowsController;
   NSMutableArray * mListOfImages;
   int iDirPos;
+  
+  NSMutableArray *arrEXIF;
+  NSMutableArray *arrIPTC;  
 }
+@property (weak) IBOutlet NSOutlineView *outlineView;
 @property (weak) IBOutlet DMSplitView *splitView;
+@property (weak) IBOutlet NSSegmentedControl *segEXIF;
 - (IBAction)segEXIFClicked:(id)sender;
 @property (weak) IBOutlet NSSegmentedControl *segFileOp;
 - (IBAction)segFileOpClicked:(id)sender;

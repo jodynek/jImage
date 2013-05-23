@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		923D214E174E7DC000E429E3 /* CProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 923D214D174E7DC000E429E3 /* CProperties.m */; };
 		926A84C91737ACD30055345B /* zoom_actual.png in Resources */ = {isa = PBXBuildFile; fileRef = 926A84C51737ACD30055345B /* zoom_actual.png */; };
 		926A84CA1737ACD30055345B /* zoom_fit.png in Resources */ = {isa = PBXBuildFile; fileRef = 926A84C61737ACD30055345B /* zoom_fit.png */; };
 		926A84CB1737ACD30055345B /* zoom_out.png in Resources */ = {isa = PBXBuildFile; fileRef = 926A84C71737ACD30055345B /* zoom_out.png */; };
@@ -39,6 +40,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		923D214C174E7DC000E429E3 /* CProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CProperties.h; sourceTree = "<group>"; };
+		923D214D174E7DC000E429E3 /* CProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CProperties.m; sourceTree = "<group>"; };
 		926A84C51737ACD30055345B /* zoom_actual.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = zoom_actual.png; path = images/16/zoom_actual.png; sourceTree = SOURCE_ROOT; };
 		926A84C61737ACD30055345B /* zoom_fit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = zoom_fit.png; path = images/16/zoom_fit.png; sourceTree = SOURCE_ROOT; };
 		926A84C71737ACD30055345B /* zoom_out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = zoom_out.png; path = images/16/zoom_out.png; sourceTree = SOURCE_ROOT; };
@@ -144,6 +147,8 @@
 				92E97F241744BD1300E9B37E /* MyImageView.h */,
 				92E97F251744BD1300E9B37E /* MyImageView.m */,
 				92E310491736486100A31C98 /* MainMenu.xib */,
+				923D214C174E7DC000E429E3 /* CProperties.h */,
+				923D214D174E7DC000E429E3 /* CProperties.m */,
 				92F7727D174CE533000AA748 /* DMSplitView.h */,
 				92F7727E174CE533000AA748 /* DMSplitView.m */,
 				92E310381736486100A31C98 /* Supporting Files */,
@@ -266,6 +271,7 @@
 				929368F0173D5F6A00F114CC /* MyWindowController.m in Sources */,
 				92E97F261744BD1300E9B37E /* MyImageView.m in Sources */,
 				92F7727F174CE533000AA748 /* DMSplitView.m in Sources */,
+				923D214E174E7DC000E429E3 /* CProperties.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
