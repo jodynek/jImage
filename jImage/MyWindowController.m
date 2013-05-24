@@ -60,11 +60,7 @@
   [_splitView setPriority:0 ofSubviewAtIndex:1];
   [_splitView setCanCollapse:YES subviewAtIndex:1];
   [_splitView collapseOrExpandSubviewAtIndex:1 animated:NO];
-  NSView* subview = _splitView.subviews[1];
-  int iWidth = [subview frame].size.width;
-  (iWidth == 0) ? [_segEXIF setSelected:FALSE forSegment:0] : [_segEXIF setSelected:TRUE forSegment:0];
-  if (iWidth != 0)
-    [self loadEXIFData:_imageURL];
+  [self refreshEXIF];
  
   // customize the IKImageView...
   [_imgMain setDoubleClickOpensImageEditPanel: YES];
@@ -83,7 +79,6 @@
   [_segTools setWidth:50 forSegment:0];
   [_segTools setWidth:50 forSegment:1];
   [_segTools setWidth:50 forSegment:2];
-  [_segTools setWidth:50 forSegment:3];
 }
 
 - (void)loadEXIFData:(NSURL *)url
@@ -128,6 +123,8 @@
 
 - (void) exif:(NSURL *) url
 {
+  if (!url)
+    return;
   CGImageSourceRef source = CGImageSourceCreateWithURL( (__bridge CFURLRef) url,NULL);
   if (!source)
   {
@@ -268,7 +265,7 @@
 - (void)openImageURL: (NSURL*)url
 {
   [_imgMain setImageWithURL:url];
-  [self displayOrHideEXIF];
+  [self refreshEXIF];
 }
 
 // open image document
@@ -599,14 +596,22 @@ float DegreetoRadian(float degree)
   [printView print:sender];
 }
 
-- (void)displayOrHideEXIF
+- (void) refreshEXIF
 {
   NSView* subview = _splitView.subviews[1];
   int iWidth = [subview frame].size.width;
   if (iWidth != 0)
   {
     [self loadEXIFData:_imageURL];
-  }  
+  }
+  (iWidth == 0) ? [_segEXIF setSelected:FALSE forSegment:0] : [_segEXIF setSelected:TRUE forSegment:0];
+}
+
+- (IBAction)displayOrHideEXIF:(id)sender
+{
+  [_splitView collapseOrExpandSubviewAtIndex:1
+                                    animated:NO];
+  [self refreshEXIF];
 }
 
 - (IBAction)segEXIFClicked:(id)sender
@@ -621,9 +626,7 @@ float DegreetoRadian(float degree)
   {
     case 0:
     {
-      [_splitView collapseOrExpandSubviewAtIndex:1
-                                        animated:NO];
-      [self displayOrHideEXIF];
+      [self displayOrHideEXIF:sender];
       break;
     }
   }
