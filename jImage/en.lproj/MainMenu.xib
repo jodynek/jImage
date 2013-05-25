@@ -751,6 +751,25 @@
 									<reference key="NSOnImage" ref="1033313550"/>
 									<reference key="NSMixedImage" ref="310636482"/>
 								</object>
+								<object class="NSMenuItem" id="722859695">
+									<reference key="NSMenu" ref="438490129"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsSeparator">YES</bool>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="1033313550"/>
+									<reference key="NSMixedImage" ref="310636482"/>
+								</object>
+								<object class="NSMenuItem" id="57830581">
+									<reference key="NSMenu" ref="438490129"/>
+									<string key="NSTitle">Show/hide EXIF info</string>
+									<string key="NSKeyEquiv">e</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="1033313550"/>
+									<reference key="NSMixedImage" ref="310636482"/>
+								</object>
 							</array>
 						</object>
 					</object>
@@ -2009,6 +2028,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
+						<string key="label">displayOrHideEXIF:</string>
+						<reference key="source" ref="1014"/>
+						<reference key="destination" ref="57830581"/>
+					</object>
+					<int key="connectionID">555</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
 						<string key="label">addFontTrait:</string>
 						<reference key="source" ref="739804602"/>
 						<reference key="destination" ref="481459203"/>
@@ -3046,6 +3073,8 @@
 							<reference ref="427296474"/>
 							<reference ref="572502533"/>
 							<reference ref="259237763"/>
+							<reference ref="722859695"/>
+							<reference ref="57830581"/>
 						</array>
 						<reference key="parent" ref="452937654"/>
 					</object>
@@ -3072,6 +3101,16 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">543</int>
 						<reference key="object" ref="259237763"/>
+						<reference key="parent" ref="438490129"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">550</int>
+						<reference key="object" ref="722859695"/>
+						<reference key="parent" ref="438490129"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">551</int>
+						<reference key="object" ref="57830581"/>
 						<reference key="parent" ref="438490129"/>
 					</object>
 				</array>
@@ -3219,6 +3258,8 @@
 				<string key="538.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="539.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="543.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="550.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="551.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="57.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3238,10 +3279,18 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">549</int>
+			<int key="maxID">555</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">DMSplitView</string>
+					<string key="superclassName">NSSplitView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/DMSplitView.h</string>
+					</object>
+				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">FirstResponder</string>
 					<object class="NSMutableDictionary" key="actions">
@@ -3283,10 +3332,12 @@
 					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="btnPrintClicked:">id</string>
+						<string key="displayOrHideEXIF:">id</string>
 						<string key="nextImageClicked:">id</string>
 						<string key="previousImageClicked:">id</string>
 						<string key="rotateLeftClicked:">id</string>
 						<string key="rotateRightClicked:">id</string>
+						<string key="segEXIFClicked:">id</string>
 						<string key="segFileOpClicked:">id</string>
 						<string key="segGoToClicked:">id</string>
 						<string key="segRotateClicked:">id</string>
@@ -3296,6 +3347,10 @@
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="btnPrintClicked:">
 							<string key="name">btnPrintClicked:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="displayOrHideEXIF:">
+							<string key="name">displayOrHideEXIF:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="nextImageClicked:">
@@ -3312,6 +3367,10 @@
 						</object>
 						<object class="IBActionInfo" key="rotateRightClicked:">
 							<string key="name">rotateRightClicked:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="segEXIFClicked:">
+							<string key="name">segEXIFClicked:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="segFileOpClicked:">
@@ -3337,15 +3396,26 @@
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="imgMain">IKImageView</string>
+						<string key="outlineView">NSOutlineView</string>
+						<string key="segEXIF">NSSegmentedControl</string>
 						<string key="segFileOp">NSSegmentedControl</string>
 						<string key="segRotate">NSSegmentedControl</string>
 						<string key="segTools">NSSegmentedControl</string>
 						<string key="segZoom">NSSegmentedControl</string>
+						<string key="splitView">DMSplitView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="imgMain">
 							<string key="name">imgMain</string>
 							<string key="candidateClassName">IKImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="outlineView">
+							<string key="name">outlineView</string>
+							<string key="candidateClassName">NSOutlineView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="segEXIF">
+							<string key="name">segEXIF</string>
+							<string key="candidateClassName">NSSegmentedControl</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="segFileOp">
 							<string key="name">segFileOp</string>
@@ -3362,6 +3432,10 @@
 						<object class="IBToOneOutletInfo" key="segZoom">
 							<string key="name">segZoom</string>
 							<string key="candidateClassName">NSSegmentedControl</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="splitView">
+							<string key="name">splitView</string>
+							<string key="candidateClassName">DMSplitView</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

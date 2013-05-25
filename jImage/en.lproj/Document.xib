@@ -60,8 +60,8 @@
 					<nil key="NSToolbarDelegate"/>
 					<bool key="NSToolbarPrefersToBeShown">YES</bool>
 					<bool key="NSToolbarShowsBaselineSeparator">YES</bool>
-					<bool key="NSToolbarAllowsUserCustomization">NO</bool>
-					<bool key="NSToolbarAutosavesConfiguration">NO</bool>
+					<bool key="NSToolbarAllowsUserCustomization">YES</bool>
+					<bool key="NSToolbarAutosavesConfiguration">YES</bool>
 					<int key="NSToolbarDisplayMode">2</int>
 					<int key="NSToolbarSizeMode">1</int>
 					<dictionary class="NSMutableDictionary" key="NSToolbarIBIdentifiedItems">
@@ -167,7 +167,7 @@
 							<object class="NSSegmentedControl" key="NSToolbarItemView" id="814441044">
 								<reference key="NSNextResponder"/>
 								<int key="NSvFlags">268</int>
-								<string key="NSFrame">{{0, 14}, {222, 24}}</string>
+								<string key="NSFrame">{{0, 14}, {189, 24}}</string>
 								<reference key="NSSuperview"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="NSEnabled">YES</bool>
@@ -206,13 +206,6 @@
 											</object>
 											<int key="NSSegmentItemImageScaling">0</int>
 										</object>
-										<object class="NSSegmentItem">
-											<object class="NSCustomResource" key="NSSegmentItemImage">
-												<string key="NSClassName">NSImage</string>
-												<string key="NSResourceName">annotate</string>
-											</object>
-											<int key="NSSegmentItemImageScaling">0</int>
-										</object>
 									</array>
 									<int key="NSSegmentStyle">1</int>
 								</object>
@@ -221,7 +214,7 @@
 							<nil key="NSToolbarItemImage"/>
 							<nil key="NSToolbarItemTarget"/>
 							<nil key="NSToolbarItemAction"/>
-							<string key="NSToolbarItemMinSize">{221, 24}</string>
+							<string key="NSToolbarItemMinSize">{189, 24}</string>
 							<string key="NSToolbarItemMaxSize">{345, 24}</string>
 							<bool key="NSToolbarItemEnabled">YES</bool>
 							<bool key="NSToolbarItemAutovalidates">YES</bool>
@@ -534,9 +527,7 @@
 							</object>
 						</object>
 					</dictionary>
-					<array key="NSToolbarIBAllowedItems">
-						<reference ref="585540565"/>
-						<reference ref="22816600"/>
+					<array class="NSMutableArray" key="NSToolbarIBAllowedItems">
 						<reference ref="344668013"/>
 						<reference ref="732725289"/>
 						<reference ref="1065556165"/>
@@ -544,8 +535,10 @@
 						<reference ref="683981104"/>
 						<reference ref="837670447"/>
 						<reference ref="869949185"/>
+						<reference ref="585540565"/>
+						<reference ref="22816600"/>
 					</array>
-					<array key="NSToolbarIBDefaultItems">
+					<array class="NSMutableArray" key="NSToolbarIBDefaultItems">
 						<reference ref="683981104"/>
 						<reference ref="344668013"/>
 						<reference ref="837670447"/>
@@ -687,7 +680,7 @@
 														<object class="NSOutlineView" id="954341739">
 															<reference key="NSNextResponder" ref="535079804"/>
 															<int key="NSvFlags">256</int>
-															<string key="NSFrameSize">{456, 387}</string>
+															<string key="NSFrameSize">{377, 387}</string>
 															<reference key="NSSuperview" ref="535079804"/>
 															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="617142537"/>
@@ -698,17 +691,19 @@
 															<object class="NSTableHeaderView" key="NSHeaderView" id="72906478">
 																<reference key="NSNextResponder" ref="847119304"/>
 																<int key="NSvFlags">256</int>
-																<string key="NSFrameSize">{456, 17}</string>
+																<string key="NSFrameSize">{377, 17}</string>
 																<reference key="NSSuperview" ref="847119304"/>
 																<reference key="NSWindow"/>
-																<reference key="NSNextKeyView" ref="535079804"/>
+																<reference key="NSNextKeyView" ref="837284389"/>
 																<string key="NSReuseIdentifierKey">_NS:16</string>
 																<reference key="NSTableView" ref="954341739"/>
 															</object>
-															<object class="_NSCornerView" key="NSCornerView">
-																<nil key="NSNextResponder"/>
+															<object class="_NSCornerView" key="NSCornerView" id="837284389">
+																<reference key="NSNextResponder" ref="908891862"/>
 																<int key="NSvFlags">-2147483392</int>
 																<string key="NSFrame">{{224, 0}, {16, 17}}</string>
+																<reference key="NSSuperview" ref="908891862"/>
+																<reference key="NSWindow"/>
 																<reference key="NSNextKeyView" ref="535079804"/>
 																<string key="NSReuseIdentifierKey">_NS:18</string>
 															</object>
@@ -770,7 +765,7 @@
 																</object>
 																<object class="NSTableColumn" id="884130668">
 																	<string key="NSIdentifier">sValue</string>
-																	<double key="NSWidth">270</double>
+																	<double key="NSWidth">191</double>
 																	<double key="NSMinWidth">40</double>
 																	<double key="NSMaxWidth">1000</double>
 																	<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -850,13 +845,12 @@
 												</object>
 												<object class="NSScroller" id="689385137">
 													<reference key="NSNextResponder" ref="908891862"/>
-													<int key="NSvFlags">256</int>
+													<int key="NSvFlags">-2147483392</int>
 													<string key="NSFrame">{{1, 388}, {377, 16}}</string>
 													<reference key="NSSuperview" ref="908891862"/>
 													<reference key="NSWindow"/>
 													<reference key="NSNextKeyView"/>
 													<string key="NSReuseIdentifierKey">_NS:60</string>
-													<bool key="NSEnabled">YES</bool>
 													<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 													<int key="NSsFlags">1</int>
 													<reference key="NSTarget" ref="908891862"/>
@@ -878,17 +872,19 @@
 													<reference key="NSBGColor" ref="73412757"/>
 													<int key="NScvFlags">4</int>
 												</object>
+												<reference ref="837284389"/>
 											</array>
 											<string key="NSFrameSize">{379, 405}</string>
 											<reference key="NSSuperview" ref="360915667"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="847119304"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
-											<int key="NSsFlags">133810</int>
+											<int key="NSsFlags">133682</int>
 											<reference key="NSVScroller" ref="617142537"/>
 											<reference key="NSHScroller" ref="689385137"/>
 											<reference key="NSContentView" ref="535079804"/>
 											<reference key="NSHeaderClipView" ref="847119304"/>
+											<reference key="NSCornerView" ref="837284389"/>
 											<bytes key="NSScrollAmts">QSAAAEEgAABBmAAAQZgAAA</bytes>
 											<double key="NSMinMagnification">0.25</double>
 											<double key="NSMaxMagnification">4</double>
@@ -918,7 +914,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="151652243"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1600, 878}}</string>
 				<string key="NSMinSize">{94, 148}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<int key="NSWindowCollectionBehavior">128</int>
@@ -1241,27 +1237,6 @@
 						<reference key="parent" ref="281260534"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">100108</int>
-						<reference key="object" ref="344668013"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="1011286292"/>
-						</array>
-						<reference key="parent" ref="546192199"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100105</int>
-						<reference key="object" ref="1011286292"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="516373913"/>
-						</array>
-						<reference key="parent" ref="344668013"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100106</int>
-						<reference key="object" ref="516373913"/>
-						<reference key="parent" ref="1011286292"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">100145</int>
 						<reference key="object" ref="208819753"/>
 						<reference key="parent" ref="0"/>
@@ -1403,6 +1378,27 @@
 						<reference key="object" ref="163072144"/>
 						<reference key="parent" ref="31189036"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100108</int>
+						<reference key="object" ref="344668013"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="1011286292"/>
+						</array>
+						<reference key="parent" ref="546192199"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100105</int>
+						<reference key="object" ref="1011286292"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="516373913"/>
+						</array>
+						<reference key="parent" ref="344668013"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100106</int>
+						<reference key="object" ref="516373913"/>
+						<reference key="parent" ref="1011286292"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -1507,6 +1503,7 @@
 					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="btnPrintClicked:">id</string>
+						<string key="displayOrHideEXIF:">id</string>
 						<string key="nextImageClicked:">id</string>
 						<string key="previousImageClicked:">id</string>
 						<string key="rotateLeftClicked:">id</string>
@@ -1521,6 +1518,10 @@
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="btnPrintClicked:">
 							<string key="name">btnPrintClicked:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="displayOrHideEXIF:">
+							<string key="name">displayOrHideEXIF:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="nextImageClicked:">
@@ -1624,7 +1625,6 @@
 			<string key="NSGoRightTemplate">{9, 9}</string>
 			<string key="NSMenuCheckmark">{11, 11}</string>
 			<string key="NSMenuMixedState">{10, 3}</string>
-			<string key="annotate">{16, 16}</string>
 			<string key="crop">{16, 16}</string>
 			<string key="exif">{16, 16}</string>
 			<string key="hand">{16, 16}</string>

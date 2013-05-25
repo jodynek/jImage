@@ -47,5 +47,6 @@
 - (IBAction)nextImageClicked:(id)sender;
 - (IBAction)previousImageClicked:(id)sender;
 - (IBAction)btnPrintClicked:(id)sender;
+- (IBAction)displayOrHideEXIF:(id)sender;
 
 @end
